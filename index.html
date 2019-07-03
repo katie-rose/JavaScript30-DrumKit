@@ -55,6 +55,9 @@
     <audio data-key="75" src="sounds/tom.wav"></audio>
     <audio data-key="76" src="sounds/tink.wav"></audio>
 
+    <button id="openKeyboard">Open Keyboard</button>
+<input id="hiddenInput" style="visibility: hidden;">
+
     <script>
 
  function playSound(e){
@@ -77,6 +80,24 @@
         key.addEventListener("transitionend", removeTransition)
       );
       window.addEventListener('keydown', playSound);
+
+
+To make the keyboard show on iOS devices you need to focus on an editable element such as an input or a textarea. Furthermore, the element must be visible and the .focus() function must to be executed in response to a user interaction such as a mouse click.
+
+The thing is - we DON'T want the input element to be visible.. I have fiddled with this for quiet some time and eventually got the result I was looking for.
+
+First, create an element you want to use to show the keyboard - in this case a button, and a hidden input element: (Working jsFiddle or Test on a mobile device)
+
+<button id="openKeyboard">Open Keyboard</button>
+<input id="hiddenInput" style="visibility: hidden;">
+Then use the following javascript:
+
+document.getElementById('openKeyboard').addEventListener('click', function(){
+    var inputElement = document.getElementById('hiddenInput');
+    inputElement.style.visibility = 'visible'; // unhide the input
+    inputElement.focus(); // focus on it so keyboard pops
+    inputElement.style.visibility = 'hidden'; // hide it again
+});
     </script>
   </body>
 </html>
